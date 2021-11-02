@@ -14,7 +14,25 @@ const frequencySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-frequencySchema.methods.findMatch = async (type, subType, color) => {
+frequencySchema.pre("save", async (next) => {
+  const freq = this;
+
+  const prev_freq = await Frequency.findOne({
+    input_type: freq.input_type,
+    input_sub_type: freq.input_sub_type,
+    input_color: freq.input_color,
+    output_type: freq.output_type,
+    output_sub_type: freq.output_sub_type,
+    output_color: freq.output_color,
+  });
+
+  if (prev_freq) {
+    prev_freq.count++;
+    prev_freq.save();
+  } else next();
+});
+
+frequencySchema.statics.findMatch = async (type, subType, color) => {
   const data = await Frequency.find({
     type: type,
     sub_type: subType,

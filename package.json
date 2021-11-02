@@ -2,7 +2,7 @@
   "name": "blitz-backend",
   "version": "1.0.0",
   "description": "backend for blitz",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,9 +13,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^4.1.3",
-    "mongoose": "^6.0.12",
-    "sequelize": "^6.8.0",
-    "sqlite3": "^5.0.2"
+    "mongoose": "^6.0.12"
   },
   "devDependencies": {
     "chalk": "^4.1.2",

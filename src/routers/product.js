@@ -32,7 +32,10 @@ router.get("/products", async (req, res) => {
       }
     }
 
-    const final = products.slice(limit, min(limit + skip, products.length));
+    const final = products.slice(
+      min(limit, products.length),
+      min(limit + skip, products.length)
+    );
     res.status(201).send(final);
   } catch (e) {
     res.status(500).send(e);
