@@ -12,4 +12,10 @@ const frequencySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Frequency", frequencySchema);
+frequencySchema.statics.findLatestData = async (type, subType, color) => {
+  const data = await Frequency.find({});
+};
+
+const Frequency = mongoose.model("Frequency", frequencySchema);
+
+module.exports = Frequency;

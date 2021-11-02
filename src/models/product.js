@@ -7,12 +7,23 @@ const productSchema = new mongoose.Schema(
     type: String,
     sub_type: String,
     color: String,
+    is_tagged: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
 
 productSchema.pre("save", async (next) => {
+  const product = this;
+  const { type, subType, color } = await getTags(product.image_url);
+  if (type && subType && color) {
+    product.type = type;
+    product.sub_type = subType;
+    product.color = color;
+    product.is_tagged = true;
+  }
   next();
 });
 
-module.exports = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
+
+module.exports = Product;
