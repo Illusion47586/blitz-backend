@@ -15,10 +15,10 @@ router.post("/buy", async (req, res) => {
         const freqIO = new Frequency({
             input_type: topProduct.type,
             input_sub_type: topProduct.sub_type,
-            input_color = topProduct.color,
+            input_color: topProduct.color,
             output_type: bottomProduct.type,
             output_sub_type: bottomProduct.sub_type,
-            output_color = bottomProduct.color,
+            output_color: bottomProduct.color,
         });
 
         const freqOI = new Frequency({
@@ -27,7 +27,7 @@ router.post("/buy", async (req, res) => {
             input_color = bottomProduct.color,
             output_type: topProduct.type,
             output_sub_type: topProduct.sub_type,
-            output_color = topProduct.color,
+            output_color: topProduct.color,
         });
 
         await freqIO.save();
