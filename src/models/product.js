@@ -24,10 +24,8 @@ productSchema.pre("save", async (next) => {
   next();
 });
 
-productSchema.statics.findByAttributes(
-  async (type, subType, color) =>
-    await Product.find({ type: type, sub_type: subType, color: color })
-);
+productSchema.statics.findByAttributes = async (type, subType, color) =>
+  await Product.find({ type: type, sub_type: subType, color: color });
 
 const Product = mongoose.model("Product", productSchema);
 

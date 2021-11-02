@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-require("./db/mongoose");
+require("./database/mongoose");
 const frequencyRouter = require("./routers/frequency");
 const productRouter = require("./routers/product");
 

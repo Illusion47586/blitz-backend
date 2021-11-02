@@ -4,5 +4,5 @@ const chalk = require("chalk");
 const port = process.env.PORT;
 
 app.listen(port, () => {
-  console.log("Server started on " + chalk.red(port) + ".");
+  console.log("Server started on " + chalk.blueBright(port) + ".");
 });
