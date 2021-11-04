@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const axios = require("axios").default;
 
 const productSchema = new mongoose.Schema(
   {
@@ -12,15 +13,21 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-productSchema.pre("save", async (next) => {
+productSchema.pre("save", async function (next) {
   const product = this;
-  const { type, subType, color } = await getTags(product.image_url);
+  const { type, subType, color } = await axios.get(
+    "https://blitz-tf.herokuapp.com/get-tags?url=" + product.image_url
+  );
+  // type = "pant";
+  // subType = "formal";
+  // color = "white";
   if (type && subType && color) {
     product.type = type;
     product.sub_type = subType;
     product.color = color;
     product.is_tagged = true;
   }
+
   next();
 });
 

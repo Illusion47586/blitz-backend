@@ -3,55 +3,67 @@ const Product = require("./product");
 
 const frequencySchema = new mongoose.Schema(
   {
-    input_type: { type: String, required: true },
-    input_sub_type: { type: String, required: true },
-    input_color: { type: String, required: true },
-    output_type: { type: String, required: true },
-    output_sub_type: { type: String, required: true },
-    output_color: { type: String, required: true },
+    type_1: { type: String, required: true },
+    sub_type_1: { type: String, required: true },
+    color_1: { type: String, required: true },
+    type_2: { type: String, required: true },
+    sub_type_2: { type: String, required: true },
+    color_2: { type: String, required: true },
     count: { type: Number, default: 1 },
   },
   { timestamps: true }
 );
 
-frequencySchema.pre("save", async (next) => {
-  const freq = this;
-
-  const prev_freq = await Frequency.findOne({
-    input_type: freq.input_type,
-    input_sub_type: freq.input_sub_type,
-    input_color: freq.input_color,
-    output_type: freq.output_type,
-    output_sub_type: freq.output_sub_type,
-    output_color: freq.output_color,
-  });
-
-  if (prev_freq) {
-    prev_freq.count++;
-    prev_freq.save();
-  } else next();
-});
-
 frequencySchema.statics.findMatch = async (type, subType, color) => {
-  const data = await Frequency.find({
-    type: type,
-    sub_type: subType,
-    color: color,
+  let ans = [];
+
+  const data_1 = await Frequency.find({
+    type_1: type,
+    sub_type_1: subType,
+    color_1: color,
   }).exec();
 
-  data.sort((x, y) => {
+  console.log(data_1);
+
+  data_1.sort((x, y) => {
     if (x.count < y.count) return 1;
     else if (x.count > y.count) return -1;
     else return 0;
   });
 
-  let ans = [];
-
-  for (let i = 0; i < Math.min(5, data.length); i++) {
+  for (let i = 0; i < Math.min(5, data_1.length); i++) {
     const products = await Product.find({
-      type: data[i].output_type,
-      sub_type: data[i].output_sub_type,
-      color: data[i].output_color,
+      type: data_1[i].type_2,
+      sub_type: data_1[i].sub_type_2,
+      color: data_1[i].color_2,
+    }).exec();
+
+    const random1 = Math.floor((Math.random() * products.length) / 3);
+    const random2 = random1 + Math.floor((Math.random() * products.length) / 3);
+    const random3 = random2 + Math.floor((Math.random() * products.length) / 3);
+
+    ans.push(products[random1]);
+    ans.push(products[random2]);
+    ans.push(products[random3]);
+  }
+
+  const data_2 = await Frequency.find({
+    type_2: type,
+    sub_type_2: subType,
+    color_2: color,
+  }).exec();
+
+  data_2.sort((x, y) => {
+    if (x.count < y.count) return 1;
+    else if (x.count > y.count) return -1;
+    else return 0;
+  });
+
+  for (let i = 0; i < Math.min(5, data_2.length); i++) {
+    const products = await Product.find({
+      type: data_2[i].type_1,
+      sub_type: data_2[i].sub_type_1,
+      color: data_2[i].color_1,
     }).exec();
 
     const random1 = Math.floor((Math.random() * products.length) / 3);

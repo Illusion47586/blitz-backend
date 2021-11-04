@@ -7,6 +7,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(chalk.green("DB connection established"));
+    console.log("DB connection established");
   })
   .catch((err) => console.error(`DB connection error ${chalk.red(err)}`));

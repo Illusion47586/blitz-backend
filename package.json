@@ -5,11 +5,16 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon /src/index.js"
+    "dev": "nodemon src/index.js",
+    "prod": "env-cmd -f ./config/prod.env nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tensorflow/tfjs": "^3.11.0",
+    "@tensorflow/tfjs-node": "^3.11.0",
+    "axios": "^0.24.0",
+    "base64-to-uint8array": "^1.0.0",
     "cloudinary": "^1.27.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -19,6 +24,7 @@
   },
   "devDependencies": {
     "chalk": "^4.1.2",
+    "image-type": "^4.1.0",
     "morgan": "^1.10.0"
   }
 }
