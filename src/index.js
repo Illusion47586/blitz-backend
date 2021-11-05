@@ -4,7 +4,7 @@ const chalk = require("chalk");
 // const model = require("./tensorflow/model.json");
 // const bin = require("./tensorflow/group1-shard1of1.bin");
 
-const port = process.env.PORT;
+const port = process.env.PORT || 8000;
 
 // app.get("/model", (req, res) => {
 //   res.send(model);
