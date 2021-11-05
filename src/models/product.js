@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema(
 productSchema.pre("save", async function (next) {
   const product = this;
   const { type, subType, color } = await axios.get(
-    "https://blitz-tf.herokuapp.com/get-tags?url=" + product.image_url
+    process.env.TF_URL + "/get-tags?url=" + product.image_url
   );
   // type = "pant";
   // subType = "formal";

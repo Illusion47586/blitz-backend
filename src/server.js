@@ -5,9 +5,9 @@ const path = require("path");
 require("dotenv").config();
 
 require("./database/mongoose");
-require("./tensorflow/tf");
 const frequencyRouter = require("./routers/frequency");
 const productRouter = require("./routers/product");
+const { router: cloudinaryRouter } = require("./routers/cloudinary");
 
 const app = express();
 
@@ -15,8 +15,9 @@ const app = express();
 app.use(express.json());
 app.use(frequencyRouter);
 app.use(productRouter);
+app.use(cloudinaryRouter);
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", process.env.REACT_URL);
   next();
 });
 
