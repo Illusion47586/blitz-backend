@@ -15,17 +15,19 @@ const productSchema = new mongoose.Schema(
 
 productSchema.pre("save", async function (next) {
   const product = this;
-  const { type, subType, color } = await axios.get(
-    process.env.TF_URL + "/get-tags?url=" + product.image_url
-  );
-  // type = "pant";
-  // subType = "formal";
-  // color = "white";
-  if (type && subType && color) {
-    product.type = type;
-    product.sub_type = subType;
-    product.color = color;
-    product.is_tagged = true;
+  if (!product.is_tagged) {
+    const { type, subType, color } = await axios.get(
+      process.env.TF_URL + "/get-tags?url=" + product.image_url
+    );
+    // type = "pant";
+    // subType = "formal";
+    // color = "white";
+    if (type && subType && color) {
+      product.type = type;
+      product.sub_type = subType;
+      product.color = color;
+      product.is_tagged = true;
+    }
   }
 
   next();
