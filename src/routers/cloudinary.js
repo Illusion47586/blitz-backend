@@ -31,7 +31,7 @@ const upload = async (base64) => {
 
   // Upload image
   const res = await cloudinary.uploader.upload(location, {
-    public_id: filename,
+    public_id: filename.split(".")[0],
     format: "png",
   });
 
