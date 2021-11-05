@@ -44,6 +44,22 @@ const addNewFrequency = async (req, res) => {
   }
 };
 
+const addNewFrequencyUsingTags = async (req, res) => {
+  try {
+    const freq = new Frequency(req.body);
+
+    const prev_freq = await Frequency.findOneAndUpdate(...req.body, {
+      $inc: { count: 1 },
+    });
+
+    if (!prev_freq) await freq.save();
+    res.status(201).send();
+  } catch (e) {
+    console.error(e);
+    res.status(500).send(e);
+  }
+};
+
 const getRecommendations = async (req, res) => {
   const id = req.query.id;
 
@@ -70,6 +86,8 @@ const getRecommendations = async (req, res) => {
 const router = new express.Router();
 
 router.post("/buy", addNewFrequency);
+
+router.post("/add", addNewFrequencyUsingTags);
 
 router.get("/recommendations", getRecommendations);
 
