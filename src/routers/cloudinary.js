@@ -18,24 +18,25 @@ const upload = async (base64) => {
       if (err) console.error(chalk.red(err));
       else console.log(chalk.bgMagenta("Temp folder created"));
     });
-  const filename = `temp/${Math.floor(Math.random() * 1000)}${Math.floor(
+  const filename = `${Math.floor(Math.random() * 1000)}${Math.floor(
     Math.random() * 1000
   )}${Math.floor(Math.random() * 1000)}.png`;
-  fs.writeFile(filename, base64, "binary", (err) => {
-    if (err) console.error(chalk.red(err));
-    else console.log(chalk.bgBlueBright(`Image saved: ${filename}`));
+  const location = "temp\\" + filename;
+  fs.writeFile(location, base64, "binary", (err) => {
+    if (err) {
+      console.error(chalk.red(err));
+      deleteImage(location);
+    } else console.log(chalk.bgBlueBright(`Image saved: ${location}`));
   });
 
   // Upload image
-  const res = await cloudinary.uploader.upload(filename, {
-    public_id: `${Math.floor(Math.random() * 1000)}${Math.floor(
-      Math.random() * 1000
-    )}${Math.floor(Math.random() * 1000)}`,
+  const res = await cloudinary.uploader.upload(location, {
+    public_id: filename,
     format: "png",
   });
 
   // Delete image
-  deleteImage(filename);
+  deleteImage(location);
   return res.url;
 };
 
@@ -60,8 +61,8 @@ router.post("/upload", async (req, res) => {
     if (result) res.status(201).send(result);
     else res.status(500).send();
   } catch (e) {
-    res.status(500).send();
     console.error(e);
+    res.status(500).send();
   }
 });
 
