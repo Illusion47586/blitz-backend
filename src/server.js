@@ -9,16 +9,16 @@ const productRouter = require("./routers/product");
 const { router: cloudinaryRouter } = require("./routers/cloudinary");
 
 const app = express();
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // Middlewares
 app.use(express.json());
 app.use(frequencyRouter);
 app.use(productRouter);
 app.use(cloudinaryRouter);
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.REACT_URL);
-  next();
-});
 
 // app.use("/static", express.static(path.join(__dirname, "static")));
 // app.use(express.static(path.join(__dirname, "static")));
