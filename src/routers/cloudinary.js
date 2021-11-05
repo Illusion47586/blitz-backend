@@ -52,7 +52,7 @@ const deleteImage = async (filename) => {
 
 const router = express.Router();
 
-router.get("/upload", async (req, res) => {
+router.post("/upload", async (req, res) => {
   try {
     // console.log(req.body.image);
     // const binary = Buffer.from(req.body, "binary");
@@ -65,7 +65,7 @@ router.get("/upload", async (req, res) => {
   }
 });
 
-router.get("/upload-and-recommendation", async (req, res) => {
+router.post("/upload-and-recommendation", async (req, res) => {
   try {
     const result = await upload(req.body.image);
     const { type, subType, color } = await axios.get(
