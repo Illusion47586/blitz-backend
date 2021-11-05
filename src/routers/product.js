@@ -18,6 +18,17 @@ const createProduct = async (req, res) => {
   }
 };
 
+const getProduct = async (req, res) => {
+  const id = req.query.id;
+  try {
+    const product = Product.findById(id);
+    res.status(200).send(product);
+  } catch (e) {
+    console.error(chalk.red(e));
+    res.status(500).send(e);
+  }
+};
+
 const getAllProducts = async (req, res) => {
   const type = req.query.type;
   const color = req.query.color;
@@ -63,6 +74,8 @@ const getAllProducts = async (req, res) => {
 const router = new express.Router();
 
 router.post("/product", createProduct);
+
+router.get("/product", getProduct);
 
 router.get("/products", getAllProducts);
 
