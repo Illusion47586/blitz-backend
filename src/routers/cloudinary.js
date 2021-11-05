@@ -13,6 +13,7 @@ const axios = require("axios").default;
 
 const upload = async (base64) => {
   // Create image from base64
+  if (!fs.existsSync("temp/")) fs.mkdir("temp");
   const filename = `temp/${Math.floor(Math.random() * 1000)}${Math.floor(
     Math.random() * 1000
   )}${Math.floor(Math.random() * 1000)}.png`;
