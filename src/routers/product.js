@@ -21,7 +21,7 @@ const createProduct = async (req, res) => {
 const getProduct = async (req, res) => {
   const id = req.query.id;
   try {
-    const product = Product.findById(id);
+    const product = await Product.findById(id);
     res.status(200).send(product);
   } catch (e) {
     console.error(chalk.red(e));
