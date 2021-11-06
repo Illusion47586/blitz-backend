@@ -32,11 +32,12 @@ const getProduct = async (req, res) => {
 const getAllProducts = async (req, res) => {
   const type = req.query.type;
   const color = req.query.color;
+  console.log(type, color);
 
   let limit = parseInt(req.query.limit);
   let skip = parseInt(req.query.skip);
-  if (!limit) limit = 0;
-  if (!skip) skip = 20;
+  if (!limit) limit = 20;
+  if (!skip) skip = 0;
 
   try {
     let products = [];
@@ -54,8 +55,8 @@ const getAllProducts = async (req, res) => {
     const final = products
       .reverse()
       .slice(
-        Math.min(limit, products.length),
-        Math.min(limit + skip, products.length)
+        Math.min(skip, products.length),
+        Math.min(skip + limit, products.length)
       );
 
     console.log(final.length);
