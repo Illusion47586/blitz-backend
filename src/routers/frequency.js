@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express");
 const Frequency = require("../models/frequency");
 const Product = require("../models/product");
@@ -46,11 +47,30 @@ const addNewFrequency = async (req, res) => {
 
 const addNewFrequencyUsingTags = async (req, res) => {
   try {
-    const freq = new Frequency(req.body);
+    const data = req.body;
 
-    const prev_freq = await Frequency.findOneAndUpdate(...req.body, {
-      $inc: { count: 1 },
+    const freq = new Frequency({
+      type_1: data.type_1,
+      sub_type_1: data.sub_type_1,
+      color_1: data.color_1,
+      type_2: data.type_2,
+      sub_type_2: data.sub_type_2,
+      color_2: data.color_2,
     });
+
+    const prev_freq = await Frequency.findOneAndUpdate(
+      {
+        type_1: data.type_1,
+        sub_type_1: data.sub_type_1,
+        color_1: data.color_1,
+        type_2: data.type_2,
+        sub_type_2: data.sub_type_2,
+        color_2: data.color_2,
+      },
+      {
+        $inc: { count: 1 },
+      }
+    );
 
     if (!prev_freq) await freq.save();
     res.status(201).send();
