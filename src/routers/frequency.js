@@ -100,7 +100,7 @@ const getRecommendations = async (req, res) => {
 };
 
 const getRecommendationsUsingTags = async (req, res) => {
-  const { type, sub_type, color } = req.body;
+  const { type, sub_type, color } = req.query;
 
   try {
     const recommendations = await Frequency.findMatch(type, sub_type, color);
@@ -123,6 +123,6 @@ router.post("/buy", addNewFrequency);
 router.post("/add", addNewFrequencyUsingTags);
 
 router.get("/recommendations", getRecommendations);
-router.post("/recommendationsUsingTags", getRecommendationsUsingTags);
+router.get("/recommendationsUsingTags", getRecommendationsUsingTags);
 
 module.exports = router;
