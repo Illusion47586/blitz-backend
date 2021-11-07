@@ -123,6 +123,6 @@ router.post("/buy", addNewFrequency);
 router.post("/add", addNewFrequencyUsingTags);
 
 router.get("/recommendations", getRecommendations);
-router.get("/recommendationsUsingTags", getRecommendationsUsingTags);
+router.post("/recommendationsUsingTags", getRecommendationsUsingTags);
 
 module.exports = router;
